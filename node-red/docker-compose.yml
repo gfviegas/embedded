@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  nodered:
+    image: nodered/node-red-docker
+    working_dir: /data
+    container_name: sinistro-front
+    command: bash -c 'yarn && yarn run serve'
+    # volumes:
+      # - ./:/data
+      # - ./node_modules:/data/node_modules
+    ports:
+      - 80:1880

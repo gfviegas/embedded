@@ -1,0 +1,49 @@
+{
+    "name": "BLESerial", 
+    "version": "1.1", 
+    "keywords": [
+        "communication"
+    ], 
+    "description": "A library to communicate with BLE Serial Modules", 
+    "frameworks": [
+        "arduino"
+    ], 
+    "platforms": [
+        "atmelavr", 
+        "atmelsam", 
+        "espressif32", 
+        "espressif8266", 
+        "intel_arc32", 
+        "microchippic32", 
+        "nordicnrf51", 
+        "nordicnrf52", 
+        "ststm32", 
+        "teensy", 
+        "timsp430"
+    ], 
+    "authors": [
+        {
+            "email": "me@shrikantpatnaik.com", 
+            "url": null, 
+            "maintainer": true, 
+            "name": "Shrikant Patnaik"
+        }
+    ], 
+    "repository": {
+        "type": "git", 
+        "url": "https://github.com/5pIO/BLESerial"
+    }, 
+    "homepage": "http://github.com/5pIO/BLESerial", 
+    "export": {
+        "include": null, 
+        "exclude": [
+            "extras", 
+            "docs", 
+            "tests", 
+            "test", 
+            "*.doxyfile", 
+            "*.pdf"
+        ]
+    }, 
+    "id": 775
+}

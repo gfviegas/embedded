@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/Gustavo/.platformio/penv/bin:/Users/Gustavo/.platformio/penv:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/opt/local/sbin:/opt/X11/bin:/Applications/Wireshark.app/Contents/MacOS:/Users/Gustavo/.yarn/bin:/Users/Gustavo/.yarn-config/global/node_modules/.bin:/usr/local/Cellar/gcc/9.1.0/bin/",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}

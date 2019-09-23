@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "name": "!!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags"
+        },
+        {
+            "name": "Mac",
+            "macFrameworkPath": [],
+            "includePath": [
+                "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/include",
+                "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/src",
+                "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/lib/ex2",
+                "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/lib/ex3",
+                "/Users/Gustavo/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/include",
+                    "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/src",
+                    "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/lib/ex2",
+                    "/Users/Gustavo/Projects/ufv/es/src/msp430/ex2/lib/ex3",
+                    "/Users/Gustavo/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "F_CPU=16000000L",
+                "PLATFORMIO=40003",
+                "ENERGIA_ARCH_MSP430",
+                "ENERGIA_MSP_EXP430G2553LP",
+                ""
+            ],
+            "intelliSenseMode": "clang-x64",
+            "compilerPath": "\"/Users/Gustavo/.platformio/packages/toolchain-timsp430/bin/msp430-gcc\" -mmcu=msp430g2553"
+        }
+    ],
+    "version": 4
+}
