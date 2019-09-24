@@ -102,14 +102,14 @@ void bluetoothHook() {
     commandReceived = SerialBT.read();
 
     switch (commandReceived) {
-      case '0':
-        SerialBT.write('+');
-        Serial.println("Diminuindo a velocidade");
+      case '-':
+        SerialBT.write('-');
+        Serial.println("Diminuindo o intervalo");
         decrementDelay();
         break;
-      case '1':
-        SerialBT.write('-');
-        Serial.println("Aumentando a velocidade");
+      case '+':
+        SerialBT.write('+');
+        Serial.println("Aumentando o intervalo");
         incrementDelay();
         break;
       default:
