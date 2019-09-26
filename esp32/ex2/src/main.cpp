@@ -7,11 +7,15 @@
  */
 
 #include <Arduino.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEServer.h>
+#include <BLE2902.h>
 #include "BluetoothSerial.h"
 
 #define SERVICE_UUID "713D0000-503E-4C75-BA94-3148F18D9422"
-#define CHARACTERISTIC_WRITE_UUID "713D0001-503E-4C75-BA94-3148F18D9422"
-#define CHARACTERISTIC_READ_UUID "713D0002-503E-4C75-BA94-3148F18D9422"
+#define CHARACTERISTIC_UUID  "713D0001-503E-4C75-BA94-3148F18D9422"
+#define CHARACTERISTIC2_UUID "713D0002-503E-4C75-BA94-3148F18D9422"
 
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
@@ -23,6 +27,7 @@
 #define MODO_INCREMENT 0
 #define MODO_DECREMENT 1
 
+BLECharacteristic *pChar;
 BluetoothSerial SerialBT;
 int delayTime = 800;
 int buttonState = HIGH;
@@ -83,41 +88,58 @@ void handleButtonChange () {
   }
 }
 
+class BluetoothCallbacks: public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *pCharacteristic) {
+      std::string value = pCharacteristic->getValue();
+
+      // Serial.println(value)
+      if (value[0] == '+') {
+        incrementDelay();
+      } else {
+        decrementDelay();
+      }
+
+
+      pChar->setValue((uint8_t*)&delayTime, 4);
+      pChar->notify();
+    }
+};
+
 /**
  * Configura o dispositivo Bluetooth Serial
  */
 void setupBluetooth() {
   Serial.begin(115200);
-  SerialBT.begin("ViegasESP32");
+
+  BLEDevice::init("ViegasESP32_BLE");
+  
+  BLEServer *pServer = BLEDevice::createServer();
+
+  BLEService *pService = pServer->createService(SERVICE_UUID);
+
+  BLECharacteristic *pCharacteristic = pService->createCharacteristic(
+                                         CHARACTERISTIC_UUID,
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_WRITE|
+                                         BLECharacteristic::PROPERTY_NOTIFY
+                                       );
+  pChar = pService->createCharacteristic(
+                                         CHARACTERISTIC2_UUID,
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_WRITE|
+                                         BLECharacteristic::PROPERTY_NOTIFY
+                                       );
+  pChar->addDescriptor(new BLE2902());
+  pCharacteristic->setCallbacks(new BluetoothCallbacks());
+
+  pService->start();
+  BLEAdvertising *pAdvertising = pServer->getAdvertising();
+  pAdvertising->start();
+
   Serial.println("Dispositivo pronto para ser pareado!");
 }
 
-/**
- * Consulta se o serial recebeu um caracter 0 ou 1 para aumentar ou diminuir a velocidade
- */
-void bluetoothHook() {
-  char commandReceived;
 
-  if (SerialBT.available()) {
-    commandReceived = SerialBT.read();
-
-    switch (commandReceived) {
-      case '-':
-        SerialBT.write('-');
-        Serial.println("Diminuindo o intervalo");
-        decrementDelay();
-        break;
-      case '+':
-        SerialBT.write('+');
-        Serial.println("Aumentando o intervalo");
-        incrementDelay();
-        break;
-      default:
-        break;
-    }
-
-  }
-}
 
 /**
  * Hook de configuração
@@ -140,7 +162,7 @@ void setup() {
  */
 void loop() {
   piscaLed();
-  bluetoothHook();
+  // bluetoothHook();
 
   if (buttonState == LOW) updateDelay();
 }
